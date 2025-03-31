@@ -1,0 +1,12 @@
+django
+djangorestframework
+celery
+flake8
+isort
+djangorestframework-simplejwt
+redis
+python-telegram-bot
+django-cors-headers
+pytest
+pytest-django
+dotenv
