@@ -27,6 +27,8 @@ TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID", None)
 assert TELEGRAM_TOKEN is not None
 assert TELEGRAM_USER_ID is not None
 
+AUTH_USER_MODEL = 'app.CustomUser'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
