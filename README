@@ -1,0 +1,7 @@
+# Рабочий процесс
+
+1. Заполнить .env
+
+2. docker compose -f docker-compose.yaml
+
+3. Зайти на 127.0.0.1:8000
