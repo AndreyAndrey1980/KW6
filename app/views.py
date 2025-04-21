@@ -32,7 +32,7 @@ class UserHabitViewSet(viewsets.ModelViewSet):
 class PublicHabitViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = HabitSerializer
     pagination_class = HabitPagination
-    permission_classes = [AllowAny]  # Доступ открыт для всех (в том числе анонимных пользователей)
+    permission_classes = [IsAuthenticated]
 
     # Возвращаем только те привычки, которые являются публичными
     def get_queryset(self):

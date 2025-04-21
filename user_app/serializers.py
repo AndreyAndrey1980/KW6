@@ -5,13 +5,15 @@ from .models import CustomUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('username', 'password', 'email', 'telegram_chat_id')
+        fields = ('password', 'email', 'telegram_chat_id')
         extra_kwargs = {
             'password': {'write_only': True},  # Пароль не отображается в ответе
             'email': {'required': True}
         }
 
     def create(self, validated_data):
-        # Используем create_user, чтобы пароль автоматически хешировался
-        user = CustomUser.objects.create_user(**validated_data)
+        password = validated_data.pop('password')
+        user = CustomUser(**validated_data)
+        user.set_password(password)
+        user.save()
         return user
