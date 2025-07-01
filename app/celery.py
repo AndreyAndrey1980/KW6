@@ -19,8 +19,6 @@ app.autodiscover_tasks()
 # Асинхронная задача Celery для отправки напоминания о привычке
 @shared_task
 async def send_habit_reminder(habit_id, chat_id):
-    from .utils import send_telegram_message
-    from .models import Habit
     try:
         # Получение объекта Habit по ID через асинхронную обёртку sync_to_async
         habit = await sync_to_async(Habit.objects.get)(id=habit_id)

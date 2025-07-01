@@ -1,15 +1,21 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import UserHabitViewSet, PublicHabitViewSet, RegisterView
+from django.urls import include, path  # Подключение систем маршрутизации Django
+from rest_framework.routers import DefaultRouter  # Автоматическая маршрутизация для ViewSet-ов
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView  # JWT views
 
+# Импорт представлений
+from .views import UserHabitViewSet, PublicHabitViewSet
+
+# Создаём роутер и регистрируем в нём viewsets
 router = DefaultRouter()
+
+# ViewSet для работы с привычками, принадлежащими текущему пользователю (требует авторизации)
 router.register(r'habits', UserHabitViewSet, basename='habit')
+
+# ViewSet для публичных привычек (можно просматривать без авторизации)
 router.register(r'publichabits', PublicHabitViewSet, basename='public-habit')
 
+# Основной список URL-паттернов
 urlpatterns = [
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/register/', RegisterView.as_view(), name='register'),
-    path('', include(router.urls))
+    # Включение маршрутов из роутера (автоматически сгенерированные маршруты для ViewSet-ов)
+    path('', include(router.urls)),
 ]

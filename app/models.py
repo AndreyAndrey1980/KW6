@@ -1,11 +1,6 @@
 from django.db import models  # Модуль моделей Django
-from django.contrib.auth.models import AbstractUser  # Для получения пользовательской модели
 from django.core.exceptions import ValidationError  # Для генерации ошибок валидации
-
-
-# Получаем модель пользователя (переопределённую, если указана в settings.AUTH_USER_MODEL)
-class CustomUser(AbstractUser):
-    telegram_chat_id = models.CharField(max_length=100, null=True, blank=True)
+from user_app.models import CustomUser
 
 
 # Модель Habit описывает привычку пользователя
@@ -34,7 +29,7 @@ class Habit(models.Model):
     )
 
     # Периодичность выполнения привычки в днях (от 1 до 7)
-    periodicity = models.PositiveIntegerField(default=1)
+    periodicity = models.PositiveIntegerField()
 
     # Награда за выполнение привычки (если не связана с другой привычкой)
     reward = models.CharField(max_length=255, null=True, blank=True)

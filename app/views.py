@@ -1,16 +1,11 @@
-from rest_framework import viewsets, status, generics, mixins  # Классы представлений DRF
+from django.db import models
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated  # Права доступа
-
+from rest_framework import viewsets, mixins, generics  # Классы представлений DRF
 from .pagination import HabitPagination  # Кастомная пагинация
-from .serializers import UserSerializer, HabitSerializer  # Сериализаторы
-from .models import CustomUser,Habit  # Модель привычек
+from .serializers import HabitSerializer  # Сериализаторы
+from .models import Habit  # Модель привычек
 from .celery import send_habit_reminder
-
-
-# Представление для регистрации нового пользователя
-class RegisterView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer  # Используется кастомный сериализатор, создающий пользователя с хешированием пароля
 
 
 # ViewSet для работы с привычками текущего пользователя
@@ -37,7 +32,7 @@ class UserHabitViewSet(viewsets.ModelViewSet):
 class PublicHabitViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = HabitSerializer
     pagination_class = HabitPagination
-    permission_classes = [AllowAny]  # Доступ открыт для всех (в том числе анонимных пользователей)
+    permission_classes = [IsAuthenticated]
 
     # Возвращаем только те привычки, которые являются публичными
     def get_queryset(self):

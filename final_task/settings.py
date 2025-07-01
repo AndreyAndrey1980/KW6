@@ -23,9 +23,11 @@ load_dotenv('./.env')
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN', None)
 TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID", None)
+CELERY_BROKER_URL =  os.getenv('CELERY_BROKER_URL', None)
 
 assert TELEGRAM_TOKEN is not None
 assert TELEGRAM_USER_ID is not None
+assert CELERY_BROKER_URL is not None
 
 AUTH_USER_MODEL = 'app.CustomUser'
 
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'app',
+    'user_app',
     'corsheaders'
 ]
 
@@ -93,6 +96,14 @@ WSGI_APPLICATION = 'final_task.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_NAME', None),
+        'USER': os.getenv('POSTGRES_USER', None),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', None),
+        'HOST': os.getenv('POSTGRES_HOST', None),
+        'PORT': '5432',
+    }
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
@@ -154,3 +165,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000"
 ]
+
+AUTH_USER_MODEL = 'user_app.CustomUser'
+
