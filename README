@@ -1,7 +1,11 @@
 # Рабочий процесс
 
-1. Заполнить .env
+1. Заполнить .template_env (добавить TELEGRAM_TOKEN, TELEGRAM_USER_ID)
 
-2. docker compose up --build
+2. Переименовать .template_env на .env
 
-3. Зайти на 127.0.0.1:8000
+3. docker compose up --build
+
+4. Зайти на 127.0.0.1:8000, добавить привычки по api
+
+5. Ждать сообщения от бота
